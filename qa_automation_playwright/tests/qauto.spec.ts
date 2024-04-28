@@ -36,7 +36,11 @@ test.describe("Verification of qauto app", () => {
     const button = await loginPage.buttonLogin();
     await button.click();
     await page.waitForURL("/panel/garage");
+    await page.evaluate(()=> {localStorage.setItem('key-my1', 'value-my1')});
+    await page.evaluate(()=> {sessionStorage.setItem('key-session-my1', 'value-session-my1')})
+    await page.pause();
   });
+    
 
 
   test("Login", async ({ page }) => {
