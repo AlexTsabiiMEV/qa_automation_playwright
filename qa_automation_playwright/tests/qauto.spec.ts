@@ -56,4 +56,3 @@ test.describe("Verification of qauto app", () => {
     await expect(page).toHaveScreenshot("main-page.png");
   });
 });
-

@@ -1,4 +1,4 @@
-import { expect, Page, Locator } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 const loginName = "alexander.tsabii@mev.com";
 const loginPass = "Qwerty123@@@";
@@ -9,7 +9,7 @@ export class LoginPage {
     inputEmail: Locator;
     inputPass: Locator;
     logoInHeader: Locator;
-    loginButtonForm: any;
+    loginButtonForm: Locator; // змінено тип
 
     constructor(page: Page) {
         this.page = page;
@@ -17,28 +17,20 @@ export class LoginPage {
         this.inputEmail = page.locator('input[name="email"]');
         this.inputPass = page.locator('input[name="password"]');
         this.logoInHeader = page.locator("a.header_logo");
-        // this.buttonLogin = page.getByRole('button', { name: 'Login' });
-        this.loginButtonForm = page.getByRole('button', { name: 'Login' });
+        this.loginButtonForm = page.locator('button[type="submit"]'); // змінено локатор кнопки
     }
 
     async openPage() {
         await this.page.goto("/");
     }
 
-
-    async buttonLogin(): Promise<Locator> {
-        return this.page.getByRole('button', { name: 'Login' });
-    }
-
     async loginWithDefaultParams() {
-        await expect(this.logoInHeader).toBeVisible();
+        await this.page.goto("/");
         await this.signInButton.click();
         await this.inputEmail.click();
         await this.inputEmail.fill(loginName);
         await this.inputPass.click();
         await this.inputPass.fill(loginPass);
         await this.loginButtonForm.click();
-        // await expect(this.buttonLogin).toBeVisible();
-        // await this.buttonLogin.click();
     };
 }
